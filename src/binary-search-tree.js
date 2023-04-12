@@ -96,18 +96,73 @@ constructor() {
   }
 
   remove(data) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    this.root = removeNode(this.root, valu);
+
+    function removeNode(node, valu) {
+      if (!node) {
+        return null;
+      }
+
+      if (valu < node.valu) {
+        node.left = removeNode(node.left, valu);
+        return node;
+      } else if (node.value < value) {
+        node.right = removeNode(node.right, valu);
+        return node;
+      } else {
+      
+        if (!node.left && !node.right) {
+          
+          return null;
+        }
+
+        if (!node.left) {
+       
+          node = node.right;
+          return node;
+        }
+
+        if (!node.right) {
+  
+          node = node.left;
+          return node;
+        }
+        let minRight = node.right;
+        while (minight.left) {
+          minFromRight = minRight.left;
+        }
+        node.value = minRight.value;
+
+        node.right = removeNode(node.right, minRight.value);
+
+        return node;
+      }
+    }
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this.root) {
+      return;
+    }
+
+    let node = this.root;
+    while (node.left) {
+      node = node.left;
+    }
+
   }
 
   max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this.root) {
+      return;
+    }
+
+    let node = this.root;
+    while (node.right) {
+      node = node.right;
+    }
+
+    return node.value;
   }
 }
 
