@@ -51,6 +51,53 @@ constructor() {
     }
   }
 
+  remove(data) {
+    this.head = removeNode(this.head, data);
+
+    function removeNode(node, data) {
+      if (!node) {
+        return null;
+      }
+
+      if (data < node.data) {
+        node.left = removeNode(node.left, data);
+        return node;
+      } else if (node.data < data) {
+        node.right = removeNode(node.right, data);
+        return node;
+      } else {
+     
+        if (!node.left && !node.right) {
+        
+          return null;
+        }
+
+        if (!node.left) {
+       
+          node = node.right;
+          return node;
+        }
+
+        if (!node.right) {
+   
+          node = node.left;
+          return node;
+        }
+
+        
+        let minRight = node.right;
+        while (minRight.left) {
+          minRight = minRight.left;
+        }
+        node.data = minRight.data;
+
+        node.right = removeNode(node.right, minRight.data);
+
+        return node;
+      }
+    }
+  }
+
   has(data) {
     let result = false;
     let trueNode = this.head;
@@ -78,15 +125,15 @@ constructor() {
     let trueNode = this.head;
     let i = 0;
     while(i < 100000) {
-      if (data === trueNode.value) {
+      if (data === trueNode.data) {
         result = trueNode;
         break;
       }
-      else if (data < trueNode.value) {
+      else if (data < trueNode.data) {
         if(!trueNode.left) break;
         else trueNode = trueNode.left;
       }
-      if (data > trueNode.value) {
+      if (data > trueNode.data) {
         if(!trueNode.right) break;
         else trueNode = trueNode.right;
       }
@@ -95,74 +142,31 @@ constructor() {
     return result
   }
 
-  remove(data) {
-    this.root = removeNode(this.root, valu);
+ 
 
-    function removeNode(node, valu) {
-      if (!node) {
-        return null;
-      }
-
-      if (valu < node.valu) {
-        node.left = removeNode(node.left, valu);
-        return node;
-      } else if (node.value < value) {
-        node.right = removeNode(node.right, valu);
-        return node;
-      } else {
-      
-        if (!node.left && !node.right) {
-          
-          return null;
-        }
-
-        if (!node.left) {
-       
-          node = node.right;
-          return node;
-        }
-
-        if (!node.right) {
-  
-          node = node.left;
-          return node;
-        }
-        let minRight = node.right;
-        while (minight.left) {
-          minFromRight = minRight.left;
-        }
-        node.value = minRight.value;
-
-        node.right = removeNode(node.right, minRight.value);
-
-        return node;
-      }
-    }
+  min() {if (!this.head) {
+    return;
   }
 
-  min() {
-    if (!this.root) {
-      return;
-    }
-
-    let node = this.root;
-    while (node.left) {
-      node = node.left;
-    }
-
+  let node = this.head;
+  while (node.left) {
+    node = node.left;
   }
+
+  return node.data;
+}
 
   max() {
-    if (!this.root) {
+    if (!this.head) {
       return;
     }
 
-    let node = this.root;
+    let node = this.head;
     while (node.right) {
       node = node.right;
     }
 
-    return node.value;
+    return node.data;
   }
 }
 
